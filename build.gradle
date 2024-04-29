@@ -27,6 +27,7 @@ dependencies {
     implementation 'mysql:mysql-connector-java:8.0.32'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
