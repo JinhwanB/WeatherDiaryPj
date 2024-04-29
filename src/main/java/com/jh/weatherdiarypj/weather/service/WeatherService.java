@@ -107,7 +107,7 @@ public class WeatherService {
     }
 
     // localDateTime -> String(yyyy-mm-dd)
-    private String getDateToString(LocalDateTime date) {
+    public String getDateToString(LocalDateTime date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return date.format(formatter);
     }
