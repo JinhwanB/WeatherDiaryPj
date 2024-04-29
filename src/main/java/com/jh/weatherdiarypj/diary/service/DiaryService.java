@@ -1,6 +1,8 @@
 package com.jh.weatherdiarypj.diary.service;
 
 import com.jh.weatherdiarypj.diary.domain.Diary;
+import com.jh.weatherdiarypj.diary.exception.DiaryException;
+import com.jh.weatherdiarypj.diary.exception.DiaryExceptionCode;
 import com.jh.weatherdiarypj.diary.repository.DiaryRepository;
 import com.jh.weatherdiarypj.weather.domain.Weather;
 import com.jh.weatherdiarypj.weather.exception.WeatherException;
@@ -51,6 +53,26 @@ public class DiaryService {
                 .date(date)
                 .build();
         return diaryRepository.save(diary);
+    }
+
+    /**
+     * 일기 수정
+     *
+     * @param date 수정할 일기의 작성 날짜
+     * @param text 수정할 내용
+     * @return 수정된 일기
+     */
+    public Diary updateDiary(String date, String text) {
+        List<Diary> diaryList = getDiary(date);
+        if (diaryList.isEmpty()) {
+            throw new DiaryException(DiaryExceptionCode.NOT_FOUNT_DIARY.getMessage());
+        }
+
+        Diary diary = diaryList.get(0);
+        Diary modified = diary.toBuilder()
+                .content(text)
+                .build();
+        return diaryRepository.save(modified);
     }
 
     // diary 조회
