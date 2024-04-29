@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -43,6 +44,20 @@ class DiaryControllerTest {
         given(diaryService.createDiary(any(), any())).willReturn(diary);
 
         mockMvc.perform(post("/diaries/diary?date=1234-12-12&text=test"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content").value("test"))
+                .andExpect(jsonPath("$.weather").value("weather"))
+                .andExpect(jsonPath("$.ico").value("ico"))
+                .andExpect(jsonPath("$.temp").value(123.12))
+                .andExpect(jsonPath("$.writeDate").value("1234-12-12"));
+    }
+
+    @Test
+    @DisplayName("일기 수정 컨트롤러 테스트")
+    void updateDiaryController() throws Exception {
+        given(diaryService.updateDiary(any(), any())).willReturn(diary);
+
+        mockMvc.perform(put("/diaries/diary?date=1234-12-12&text=test"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").value("test"))
                 .andExpect(jsonPath("$.weather").value("weather"))
