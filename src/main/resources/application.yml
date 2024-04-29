@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: weatherdiarypj
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/weather_diary?characterEncoding=UTF-8
+    username: root
+    password: 7819
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+    show-sql: true
