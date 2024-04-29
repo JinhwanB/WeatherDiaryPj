@@ -31,7 +31,7 @@ public class WeatherService {
     @Value("${openapi.key}")
     private String apiKey;
 
-    @Scheduled(cron = "0/5 * * * * *")
+    @Scheduled(cron = "0 0 1 * * *")
     public void saveWeather() throws IOException {
         weatherRepository.save(getWeatherFromApi());
     }
