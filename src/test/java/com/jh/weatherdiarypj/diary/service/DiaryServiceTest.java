@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -62,6 +63,27 @@ class DiaryServiceTest {
     void updateDiaryFail() {
         try {
             Diary modified = diaryService.updateDiary("2024-04-30", "good");
+        } catch (DiaryException e) {
+            assertThat(e.getMessage()).isEqualTo(DiaryExceptionCode.NOT_FOUNT_DIARY.getMessage());
+        }
+    }
+
+    @Test
+    @DisplayName("일기 삭제 성공 테스트")
+    void deleteDiary() throws IOException {
+        Diary diary = diaryService.createDiary("2024-04-30", "test");
+        diaryService.deleteDiary("2024-04-30");
+
+        List<Diary> diaryList = diaryService.getDiary("2024-04-30");
+
+        assertThat(diaryList).hasSize(0);
+    }
+
+    @Test
+    @DisplayName("일기 삭제 실패 테스트")
+    void deleteDiaryFail() {
+        try {
+            diaryService.deleteDiary("2024-04-30");
         } catch (DiaryException e) {
             assertThat(e.getMessage()).isEqualTo(DiaryExceptionCode.NOT_FOUNT_DIARY.getMessage());
         }
