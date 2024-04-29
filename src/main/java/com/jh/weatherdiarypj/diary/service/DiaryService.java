@@ -97,7 +97,7 @@ public class DiaryService {
 
     // diary 조회
     @Transactional(readOnly = true)
-    protected List<Diary> getDiary(String date) {
+    public List<Diary> getDiary(String date) {
         return diaryRepository.findAllByDateAndDelDate(date, null);
     }
 }
