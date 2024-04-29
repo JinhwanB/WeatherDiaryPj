@@ -1,6 +1,8 @@
 package com.jh.weatherdiarypj.weather.service;
 
 import com.jh.weatherdiarypj.weather.domain.Weather;
+import com.jh.weatherdiarypj.weather.exception.WeatherErrorCode;
+import com.jh.weatherdiarypj.weather.exception.WeatherException;
 import com.jh.weatherdiarypj.weather.repository.WeatherRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,6 +58,11 @@ public class WeatherService {
                 .weather(weather)
                 .regDate(date)
                 .build();
+    }
+
+    @Transactional(readOnly = true)
+    public Weather getWeather(String date) {
+        return weatherRepository.findByRegDate(date).orElseThrow(() -> new WeatherException(WeatherErrorCode.NOT_FOUNT_WEATHER_INFO.getMessage()));
     }
 
     // api에서 데이터를 받아옴
