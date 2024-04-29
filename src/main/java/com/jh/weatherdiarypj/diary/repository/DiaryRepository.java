@@ -11,5 +11,5 @@ import java.util.List;
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
     List<Diary> findAllByDateAndDelDate(String date, LocalDateTime delDate);
 
-    List<Diary> findByRegDateBetweenAndDelDateIsNull(LocalDateTime startDate, LocalDateTime endDate);
+    List<Diary> findAllByRegDateBetweenAndDelDateIsNull(LocalDateTime startDate, LocalDateTime endDate);
 }
