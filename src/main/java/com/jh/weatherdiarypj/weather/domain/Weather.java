@@ -3,6 +3,7 @@ package com.jh.weatherdiarypj.weather.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder(toBuilder = true)
 @ToString
+@EntityListeners(AuditingEntityListener.class)
 public class Weather {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
