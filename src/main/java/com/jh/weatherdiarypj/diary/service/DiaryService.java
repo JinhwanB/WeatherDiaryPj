@@ -35,6 +35,7 @@ public class DiaryService {
         Weather weather;
         try {
             weather = weatherService.getWeather(date);
+            log.info("저장된 날씨 불러오기 성공");
         } catch (WeatherException e) {
             log.error("날짜에 해당하는 날씨 정보가 없으므로 새롭게 저장합니다.");
 
