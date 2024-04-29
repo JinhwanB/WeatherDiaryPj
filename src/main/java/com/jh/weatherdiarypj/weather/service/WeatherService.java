@@ -48,11 +48,13 @@ public class WeatherService {
         double temp = (double) weatherInfo.get("temp");
         String weather = (String) weatherInfo.get("main");
         String icon = (String) weatherInfo.get("icon");
+        String date = getDateToString(LocalDateTime.now());
 
         return Weather.builder()
                 .ico(icon)
                 .temp(temp)
                 .weather(weather)
+                .regDate(date)
                 .build();
     }
 
