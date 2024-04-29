@@ -96,14 +96,28 @@ public class DiaryService {
         }
     }
 
-    // diary 조회
+    /**
+     * 날짜에 해당하는 일기 리스트 조회
+     *
+     * @param date 조회할 일기의 작성 날짜
+     * @return 조회된 일기 리스트
+     */
     @Transactional(readOnly = true)
     public List<Diary> getDiary(String date) {
         return diaryRepository.findAllByDateAndDelDate(date, null);
     }
 
+    /**
+     * 시작 날짜부터 끝 날짜까지에 해당하는 일기 리스트 조회
+     *
+     * @param startDate 시작 날짜
+     * @param endDate   끝 날짜
+     * @return 조회된 일기 리스트
+     */
     public List<Diary> getDiaries(String startDate, String endDate) {
-
+        LocalDateTime start = stringToLocalDateTime(startDate);
+        LocalDateTime end = stringToLocalDateTime(endDate);
+        return diaryRepository.findAllByRegDateBetweenAndDelDateIsNull(start, end);
     }
 
     // string -> localDateTime
