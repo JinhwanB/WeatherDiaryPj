@@ -4,6 +4,7 @@ import com.jh.weatherdiarypj.weather.domain.Weather;
 import com.jh.weatherdiarypj.weather.repository.WeatherRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -96,7 +97,8 @@ public class WeatherService {
         Map<String, Object> resultMap = new HashMap<>();
         JSONObject mainData = (JSONObject) jsonObject.get("main");
         resultMap.put("temp", mainData.get("temp"));
-        JSONObject weatherData = (JSONObject) jsonObject.get("weather");
+        JSONArray weatherArray = (JSONArray) jsonObject.get("weather");
+        JSONObject weatherData = (JSONObject) weatherArray.get(0);
         resultMap.put("main", weatherData.get("main"));
         resultMap.put("icon", weatherData.get("icon"));
         return resultMap;
