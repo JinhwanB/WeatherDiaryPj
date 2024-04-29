@@ -2,6 +2,8 @@ package com.jh.weatherdiarypj.diary.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder(toBuilder = true)
 @ToString
+@EntityListeners(AuditingEntityListener.class)
 public class Diary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +33,11 @@ public class Diary {
     private double temp;
 
     @Column(nullable = false)
-    private String regDate;
+    private String date;
+
+    @Column(nullable = false, updatable = false)
+    @CreatedDate
+    private LocalDateTime regDate;
 
     @Column
     private LocalDateTime delDate;
