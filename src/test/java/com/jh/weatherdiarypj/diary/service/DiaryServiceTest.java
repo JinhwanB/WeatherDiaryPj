@@ -1,6 +1,8 @@
 package com.jh.weatherdiarypj.diary.service;
 
 import com.jh.weatherdiarypj.diary.domain.Diary;
+import com.jh.weatherdiarypj.diary.exception.DiaryException;
+import com.jh.weatherdiarypj.diary.exception.DiaryExceptionCode;
 import com.jh.weatherdiarypj.weather.domain.Weather;
 import com.jh.weatherdiarypj.weather.repository.WeatherRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -44,5 +46,24 @@ class DiaryServiceTest {
         Diary diary = diaryService.createDiary("2024-04-30", "test");
 
         assertThat(diary.getContent()).isEqualTo("test");
+    }
+
+    @Test
+    @DisplayName("일기 수정 성공 테스트")
+    void updateDiary() throws IOException {
+        Diary diary = diaryService.createDiary("2024-04-30", "test");
+        Diary modified = diaryService.updateDiary("2024-04-30", "good");
+
+        assertThat(modified.getContent()).isEqualTo("good");
+    }
+
+    @Test
+    @DisplayName("일기 수정 실패 테스트")
+    void updateDiaryFail() {
+        try {
+            Diary modified = diaryService.updateDiary("2024-04-30", "good");
+        } catch (DiaryException e) {
+            assertThat(e.getMessage()).isEqualTo(DiaryExceptionCode.NOT_FOUNT_DIARY.getMessage());
+        }
     }
 }
