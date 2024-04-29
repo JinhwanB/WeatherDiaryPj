@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
-    List<Diary> findAllByRegDateAndDelDate(String date, LocalDateTime delDate);
+    List<Diary> findAllByDateAndDelDate(String date, LocalDateTime delDate);
 }
