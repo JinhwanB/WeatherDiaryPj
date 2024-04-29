@@ -37,6 +37,9 @@ public class DiaryController {
     public ResponseEntity<DiaryResponseDto> create(
             @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String date,
             @RequestParam String text) throws IOException {
+        log.info("작성 날짜={}", date);
+        log.info("작성할 내용={}", text);
+
         Diary diary = diaryService.createDiary(date, text);
         return ResponseEntity.ok(diary.toDto());
     }
@@ -52,6 +55,9 @@ public class DiaryController {
     public ResponseEntity<DiaryResponseDto> update(
             @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String date,
             @RequestParam String text) {
+        log.info("수정할 일기의 날짜={}", date);
+        log.info("수정할 내용={}", text);
+        
         Diary diary = diaryService.updateDiary(date, text);
         return ResponseEntity.ok(diary.toDto());
     }
