@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -73,6 +74,25 @@ public class DiaryService {
                 .content(text)
                 .build();
         return diaryRepository.save(modified);
+    }
+
+    /**
+     * 일기 삭제
+     *
+     * @param date 삭제할 일기의 날짜
+     */
+    public void deleteDiary(String date) {
+        List<Diary> diaryList = getDiary(date);
+        if (diaryList.isEmpty()) {
+            throw new DiaryException(DiaryExceptionCode.NOT_FOUNT_DIARY.getMessage());
+        }
+
+        for (Diary diary : diaryList) {
+            Diary deleted = diary.toBuilder()
+                    .delDate(LocalDateTime.now())
+                    .build();
+            diaryRepository.save(deleted);
+        }
     }
 
     // diary 조회
