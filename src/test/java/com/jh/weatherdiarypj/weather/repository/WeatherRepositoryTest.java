@@ -24,6 +24,7 @@ class WeatherRepositoryTest {
                 .weather("weather")
                 .temp(345.23)
                 .ico("ico")
+                .regDate("1234-12-12")
                 .build();
         weatherRepository.save(weather);
     }
