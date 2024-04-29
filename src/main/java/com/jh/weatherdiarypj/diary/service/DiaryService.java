@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -115,14 +114,17 @@ public class DiaryService {
      * @return 조회된 일기 리스트
      */
     public List<Diary> getDiaries(String startDate, String endDate) {
-        LocalDateTime start = stringToLocalDateTime(startDate);
-        LocalDateTime end = stringToLocalDateTime(endDate);
+        LocalDateTime start = stringToStartLocalDateTime(startDate);
+        LocalDateTime end = stringToEndLocalDateTime(endDate);
         return diaryRepository.findAllByRegDateBetweenAndDelDateIsNull(start, end);
     }
 
     // string -> localDateTime
-    private LocalDateTime stringToLocalDateTime(String date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return LocalDateTime.parse(date, formatter);
+    private LocalDateTime stringToStartLocalDateTime(String date) {
+        return LocalDateTime.parse(date + "T00:00:00");
+    }
+
+    private LocalDateTime stringToEndLocalDateTime(String date) {
+        return LocalDateTime.parse(date + "T23:59:59");
     }
 }
