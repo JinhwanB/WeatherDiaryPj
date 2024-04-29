@@ -2,7 +2,6 @@ package com.jh.weatherdiarypj.diary.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
@@ -30,9 +29,8 @@ public class Diary {
     @Column(nullable = false)
     private String temp;
 
-    @Column(nullable = false, updatable = false)
-    @CreatedDate
-    private LocalDateTime regDate;
+    @Column(nullable = false)
+    private String regDate;
 
     @Column
     private LocalDateTime delDate;
