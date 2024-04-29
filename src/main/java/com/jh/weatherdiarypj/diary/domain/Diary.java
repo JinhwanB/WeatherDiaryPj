@@ -27,7 +27,7 @@ public class Diary {
     private String ico;
 
     @Column(nullable = false)
-    private String temp;
+    private double temp;
 
     @Column(nullable = false)
     private String regDate;
