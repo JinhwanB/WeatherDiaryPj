@@ -1,5 +1,6 @@
 package com.jh.weatherdiarypj.diary.domain;
 
+import com.jh.weatherdiarypj.diary.dto.DiaryResponseDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -41,4 +42,15 @@ public class Diary {
 
     @Column
     private LocalDateTime delDate;
+
+    // 엔티티 -> dto
+    public DiaryResponseDto toDto() {
+        return DiaryResponseDto.builder()
+                .ico(ico)
+                .weather(weather)
+                .content(content)
+                .temp(temp)
+                .writeDate(date)
+                .build();
+    }
 }
