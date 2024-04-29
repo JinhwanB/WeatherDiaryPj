@@ -14,10 +14,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -41,6 +38,21 @@ public class DiaryController {
             @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String date,
             @RequestParam String text) throws IOException {
         Diary diary = diaryService.createDiary(date, text);
+        return ResponseEntity.ok(diary.toDto());
+    }
+
+    // 일기 수정
+    @Operation(summary = "일기 수정")
+    @Parameters(value = {
+            @Parameter(name = "date", description = "수정할 일기의 날짜"),
+            @Parameter(name = "text", description = "수정할 일기의 내용")
+    })
+    @ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = DiaryResponseDto.class)))
+    @PutMapping("/diary")
+    public ResponseEntity<DiaryResponseDto> update(
+            @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String date,
+            @RequestParam String text) {
+        Diary diary = diaryService.updateDiary(date, text);
         return ResponseEntity.ok(diary.toDto());
     }
 }
