@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -99,5 +100,15 @@ public class DiaryService {
     @Transactional(readOnly = true)
     public List<Diary> getDiary(String date) {
         return diaryRepository.findAllByDateAndDelDate(date, null);
+    }
+
+    public List<Diary> getDiaries(String startDate, String endDate) {
+
+    }
+
+    // string -> localDateTime
+    private LocalDateTime stringToLocalDateTime(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return LocalDateTime.parse(date, formatter);
     }
 }
