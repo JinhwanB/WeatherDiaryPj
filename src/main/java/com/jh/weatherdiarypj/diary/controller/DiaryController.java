@@ -57,8 +57,19 @@ public class DiaryController {
             @RequestParam String text) {
         log.info("수정할 일기의 날짜={}", date);
         log.info("수정할 내용={}", text);
-        
+
         Diary diary = diaryService.updateDiary(date, text);
         return ResponseEntity.ok(diary.toDto());
+    }
+
+    // 일기 삭제
+    @Operation(summary = "일기 삭제")
+    @Parameter(name = "date", description = "삭제할 일기의 날짜")
+    @ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = String.class)))
+    @DeleteMapping("/diary")
+    public ResponseEntity<String> delete(
+            @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String date) {
+        diaryService.deleteDiary(date);
+        return ResponseEntity.ok("삭제 성공");
     }
 }
