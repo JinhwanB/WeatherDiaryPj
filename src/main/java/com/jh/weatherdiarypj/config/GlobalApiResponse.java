@@ -22,7 +22,7 @@ public class GlobalApiResponse {
     private DiaryResponseDto result;
 
     // api 응답 성공 시 apiResponse로 변환 메소드
-    public GlobalApiResponse toApiResponse(DiaryResponseDto diaryResponseDto) {
+    public static GlobalApiResponse toApiResponse(DiaryResponseDto diaryResponseDto) {
         return GlobalApiResponse.builder()
                 .message("성공")
                 .result(diaryResponseDto)
