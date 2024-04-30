@@ -20,4 +20,13 @@ public class ApiResponse {
 
     @Schema(description = "성공 시 응답 결과", implementation = DiaryResponseDto.class)
     private DiaryResponseDto result;
+
+    // api 응답 성공 시 apiResponse로 변환 메소드
+    public ApiResponse toApiResponse(DiaryResponseDto diaryResponseDto) {
+        return ApiResponse.builder()
+                .message("성공")
+                .result(diaryResponseDto)
+                .status(200)
+                .build();
+    }
 }
