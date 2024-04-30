@@ -15,6 +15,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.List;
 @RequestMapping("/diaries")
 @RequiredArgsConstructor
 @Slf4j
+@Validated
 @Tag(name = "일기 api")
 public class DiaryController {
     private final DiaryService diaryService;
@@ -102,7 +104,7 @@ public class DiaryController {
             @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String endDate) {
         log.info("조회할 날짜의 시작날짜 ={}", startDate);
         log.info("조회할 날짜의 끝날짜={}", endDate);
-        
+
         List<Diary> diaries = diaryService.getDiaries(startDate, endDate);
         return ResponseEntity.ok(diaries.stream().map(Diary::toDto).toList());
     }
