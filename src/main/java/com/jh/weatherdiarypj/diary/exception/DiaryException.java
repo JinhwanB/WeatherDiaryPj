@@ -1,11 +1,14 @@
 package com.jh.weatherdiarypj.diary.exception;
 
-public class DiaryException extends RuntimeException {
-    public DiaryException() {
-        super();
-    }
+import lombok.Getter;
 
-    public DiaryException(String message) {
+@Getter
+public class DiaryException extends RuntimeException {
+    private DiaryExceptionCode errorCode;
+    private String message;
+
+    public DiaryException(DiaryExceptionCode diaryExceptionCode, String message) {
         super(message);
+        this.errorCode = diaryExceptionCode;
     }
 }
