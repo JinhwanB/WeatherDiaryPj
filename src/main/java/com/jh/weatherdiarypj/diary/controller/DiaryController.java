@@ -6,6 +6,7 @@ import com.jh.weatherdiarypj.diary.service.DiaryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -17,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/diaries")
@@ -71,5 +73,16 @@ public class DiaryController {
             @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String date) {
         diaryService.deleteDiary(date);
         return ResponseEntity.ok("삭제 성공");
+    }
+
+    // 일기 조회
+    @Operation(summary = "일기 조회")
+    @Parameter(name = "date", description = "삭제할 일기의 날짜")
+    @ApiResponse(responseCode = "200", description = "성공", content = @Content(array = @ArraySchema(schema = @Schema(implementation = DiaryResponseDto.class))))
+    @GetMapping("/diary")
+    public ResponseEntity<List<DiaryResponseDto>> get(
+            @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String date) {
+        List<Diary> diaryList = diaryService.getDiary(date);
+        return ResponseEntity.ok(diaryList.stream().map(Diary::toDto).toList());
     }
 }
