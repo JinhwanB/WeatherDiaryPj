@@ -1,6 +1,6 @@
 package com.jh.weatherdiarypj.diary.controller;
 
-import com.jh.weatherdiarypj.config.ApiResponse;
+import com.jh.weatherdiarypj.config.GlobalApiResponse;
 import com.jh.weatherdiarypj.diary.domain.Diary;
 import com.jh.weatherdiarypj.diary.dto.DiaryResponseDto;
 import com.jh.weatherdiarypj.diary.service.DiaryService;
@@ -38,7 +38,7 @@ public class DiaryController {
     })
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = DiaryResponseDto.class))),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "파라미터 유효성 검증 실패", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ApiResponse.class))))
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "파라미터 유효성 검증 실패", content = @Content(array = @ArraySchema(schema = @Schema(implementation = GlobalApiResponse.class))))
     })
     @PostMapping("/diary")
     public ResponseEntity<DiaryResponseDto> create(
