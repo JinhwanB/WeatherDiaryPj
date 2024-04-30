@@ -10,10 +10,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -64,5 +64,13 @@ class DiaryControllerTest {
                 .andExpect(jsonPath("$.ico").value("ico"))
                 .andExpect(jsonPath("$.temp").value(123.12))
                 .andExpect(jsonPath("$.writeDate").value("1234-12-12"));
+    }
+
+    @Test
+    @DisplayName("일기 삭제 컨트롤러 테스트")
+    void deleteDiaryController() throws Exception {
+        mockMvc.perform(delete("/diaries/diary?date=1234-12-12"))
+                .andExpect(status().isOk())
+                .andExpect(result -> assertThat(result.getResponse().getContentAsString()).isEqualTo("삭제 성공"));
     }
 }
