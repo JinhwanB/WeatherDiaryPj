@@ -11,7 +11,7 @@ import lombok.*;
 @Builder(toBuilder = true)
 @ToString
 @Schema(description = "전체 api 응답 response")
-public class ApiResponse {
+public class GlobalApiResponse {
     @Schema(description = "http 상태 코드", examples = {"200", "400", "404", "500"})
     private int status;
 
@@ -22,8 +22,8 @@ public class ApiResponse {
     private DiaryResponseDto result;
 
     // api 응답 성공 시 apiResponse로 변환 메소드
-    public ApiResponse toApiResponse(DiaryResponseDto diaryResponseDto) {
-        return ApiResponse.builder()
+    public GlobalApiResponse toApiResponse(DiaryResponseDto diaryResponseDto) {
+        return GlobalApiResponse.builder()
                 .message("성공")
                 .result(diaryResponseDto)
                 .status(200)
