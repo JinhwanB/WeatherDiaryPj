@@ -3,6 +3,13 @@
     <property name="LOGS_PATH" value="./logs"/>
     <property name="LOGS_LEVEL" value="INFO"/>
 
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <file>${LOGS_PATH}/log_file.log</file>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{HH:mm} %-5level %logger{36} - %msg%n</pattern>
+        </layout>
+    </appender>
+
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOGS_PATH}/log_file.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
