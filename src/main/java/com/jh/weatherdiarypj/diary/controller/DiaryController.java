@@ -85,4 +85,19 @@ public class DiaryController {
         List<Diary> diaryList = diaryService.getDiary(date);
         return ResponseEntity.ok(diaryList.stream().map(Diary::toDto).toList());
     }
+
+    // startDate부터 endDate까지의 일기 조회
+    @Operation(summary = "일기 조회 - startDate부터 endDate까지의 일기 조회")
+    @Parameters(value = {
+            @Parameter(name = "startDate", description = "조회할 일기 범위의 시작날짜"),
+            @Parameter(name = "endDate", description = "조회할 일기 범위의 끝날짜")
+    })
+    @ApiResponse(responseCode = "200", description = "성공", content = @Content(array = @ArraySchema(schema = @Schema(implementation = DiaryResponseDto.class))))
+    @GetMapping
+    public ResponseEntity<List<DiaryResponseDto>> getFromStartEnd(
+            @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String startDate,
+            @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String endDate) {
+        List<Diary> diaries = diaryService.getDiaries(startDate, endDate);
+        return ResponseEntity.ok(diaries.stream().map(Diary::toDto).toList());
+    }
 }
