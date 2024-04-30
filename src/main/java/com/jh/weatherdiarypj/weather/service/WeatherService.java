@@ -50,7 +50,6 @@ public class WeatherService {
         String weather = (String) weatherInfo.get("main");
         String icon = (String) weatherInfo.get("icon");
         String date = getDateToString(LocalDateTime.now());
-
         return Weather.builder()
                 .ico(icon)
                 .temp(temp)
@@ -59,7 +58,7 @@ public class WeatherService {
                 .build();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, noRollbackFor = RuntimeException.class)
     public Weather getWeather(String date) {
         return weatherRepository.findByRegDate(date).orElseThrow(() -> new WeatherException(WeatherErrorCode.NOT_FOUNT_WEATHER_INFO.getMessage()));
     }
