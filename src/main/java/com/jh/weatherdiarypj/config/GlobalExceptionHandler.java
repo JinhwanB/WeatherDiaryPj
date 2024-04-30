@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 public class GlobalExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<List<GlobalApiResponse>> handleValidException(ConstraintViolationException e) {
+    private ResponseEntity<List<GlobalApiResponse>> handleValidException(ConstraintViolationException e) {
         log.error("유효성 검사 실패");
 
         List<GlobalApiResponse> list = new ArrayList<>();
@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(DiaryException.class)
-    public ResponseEntity<GlobalApiResponse> handleDiaryException(DiaryException e) {
+    private ResponseEntity<GlobalApiResponse> handleDiaryException(DiaryException e) {
         log.error("DiaryException={}", e.getErrorCode().getMessage());
         GlobalApiResponse response = GlobalApiResponse.builder()
                 .status(e.getErrorCode().getStatus())
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
 
     // 예상하지 못한 오류 응답
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<GlobalApiResponse> handleAllException(Exception e) {
+    private ResponseEntity<GlobalApiResponse> handleAllException(Exception e) {
         log.error("예기치 못한 exception이 발생했습니다={}", e.getClass());
         log.error("에러 메시지={}", e.getMessage());
         GlobalApiResponse response = GlobalApiResponse.builder()
