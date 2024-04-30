@@ -70,6 +70,8 @@ public class DiaryController {
     @DeleteMapping("/diary")
     public ResponseEntity<String> delete(
             @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String date) {
+        log.info("삭제할 일기의 작성 날짜={}", date);
+
         diaryService.deleteDiary(date);
         return ResponseEntity.ok("삭제 성공");
     }
@@ -81,6 +83,8 @@ public class DiaryController {
     @GetMapping("/diary")
     public ResponseEntity<List<DiaryResponseDto>> get(
             @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String date) {
+        log.info("조회할 일기의 작성 날짜={}", date);
+
         List<Diary> diaryList = diaryService.getDiary(date);
         return ResponseEntity.ok(diaryList.stream().map(Diary::toDto).toList());
     }
@@ -96,6 +100,9 @@ public class DiaryController {
     public ResponseEntity<List<DiaryResponseDto>> getFromStartEnd(
             @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String startDate,
             @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String endDate) {
+        log.info("조회할 날짜의 시작날짜 ={}", startDate);
+        log.info("조회할 날짜의 끝날짜={}", endDate);
+        
         List<Diary> diaries = diaryService.getDiaries(startDate, endDate);
         return ResponseEntity.ok(diaries.stream().map(Diary::toDto).toList());
     }
