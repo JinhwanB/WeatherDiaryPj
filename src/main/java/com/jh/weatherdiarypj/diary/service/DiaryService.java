@@ -33,7 +33,7 @@ public class DiaryService {
      * @return 작성된 일기
      * @throws IOException
      */
-    public Diary createDiary(String date, String text) throws IOException {
+    public Diary createDiary(String date, String text) {
         Weather weather;
         try {
             weather = weatherService.getWeather(date);
