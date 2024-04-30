@@ -13,7 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -48,11 +47,13 @@ class DiaryControllerTest {
 
         mockMvc.perform(post("/diaries/diary?date=1234-12-12&text=test"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content").value("test"))
-                .andExpect(jsonPath("$.weather").value("weather"))
-                .andExpect(jsonPath("$.ico").value("ico"))
-                .andExpect(jsonPath("$.temp").value(123.12))
-                .andExpect(jsonPath("$.writeDate").value("1234-12-12"));
+                .andExpect(jsonPath("$.status").value(200))
+                .andExpect(jsonPath("$.message").value("성공"))
+                .andExpect(jsonPath("$.result[0].content").value("test"))
+                .andExpect(jsonPath("$.result[0].weather").value("weather"))
+                .andExpect(jsonPath("$.result[0].ico").value("ico"))
+                .andExpect(jsonPath("$.result[0].temp").value(123.12))
+                .andExpect(jsonPath("$.result[0].writeDate").value("1234-12-12"));
     }
 
     @Test
@@ -62,11 +63,13 @@ class DiaryControllerTest {
 
         mockMvc.perform(put("/diaries/diary?date=1234-12-12&text=test"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content").value("test"))
-                .andExpect(jsonPath("$.weather").value("weather"))
-                .andExpect(jsonPath("$.ico").value("ico"))
-                .andExpect(jsonPath("$.temp").value(123.12))
-                .andExpect(jsonPath("$.writeDate").value("1234-12-12"));
+                .andExpect(jsonPath("$.status").value(200))
+                .andExpect(jsonPath("$.message").value("성공"))
+                .andExpect(jsonPath("$.result[0].content").value("test"))
+                .andExpect(jsonPath("$.result[0].weather").value("weather"))
+                .andExpect(jsonPath("$.result[0].ico").value("ico"))
+                .andExpect(jsonPath("$.result[0].temp").value(123.12))
+                .andExpect(jsonPath("$.result[0].writeDate").value("1234-12-12"));
     }
 
     @Test
@@ -74,7 +77,9 @@ class DiaryControllerTest {
     void deleteDiaryController() throws Exception {
         mockMvc.perform(delete("/diaries/diary?date=1234-12-12"))
                 .andExpect(status().isOk())
-                .andExpect(result -> assertThat(result.getResponse().getContentAsString()).isEqualTo("삭제 성공"));
+                .andExpect(jsonPath("$.status").value(200))
+                .andExpect(jsonPath("$.message").value("성공"))
+                .andExpect(jsonPath("$.result[0]").doesNotExist());
     }
 
     @Test
@@ -85,10 +90,12 @@ class DiaryControllerTest {
 
         mockMvc.perform(get("/diaries/diary?date=1234-12-12"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].content").value("test"))
-                .andExpect(jsonPath("$[0].weather").value("weather"))
-                .andExpect(jsonPath("$[0].ico").value("ico"))
-                .andExpect(jsonPath("$[0].temp").value(123.12))
-                .andExpect(jsonPath("$[0].writeDate").value("1234-12-12"));
+                .andExpect(jsonPath("$.status").value(200))
+                .andExpect(jsonPath("$.message").value("성공"))
+                .andExpect(jsonPath("$.result[0].content").value("test"))
+                .andExpect(jsonPath("$.result[0].weather").value("weather"))
+                .andExpect(jsonPath("$.result[0].ico").value("ico"))
+                .andExpect(jsonPath("$.result[0].temp").value(123.12))
+                .andExpect(jsonPath("$.result[0].writeDate").value("1234-12-12"));
     }
 }
