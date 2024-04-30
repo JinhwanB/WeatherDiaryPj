@@ -113,6 +113,7 @@ public class DiaryService {
      * @param endDate   끝 날짜
      * @return 조회된 일기 리스트
      */
+    @Transactional(readOnly = true)
     public List<Diary> getDiaries(String startDate, String endDate) {
         LocalDateTime start = stringToStartLocalDateTime(startDate);
         LocalDateTime end = stringToEndLocalDateTime(endDate);
