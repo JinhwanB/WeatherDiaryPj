@@ -10,6 +10,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -72,5 +75,20 @@ class DiaryControllerTest {
         mockMvc.perform(delete("/diaries/diary?date=1234-12-12"))
                 .andExpect(status().isOk())
                 .andExpect(result -> assertThat(result.getResponse().getContentAsString()).isEqualTo("삭제 성공"));
+    }
+
+    @Test
+    @DisplayName("일기 조회 컨트롤러 테스트")
+    void readDiaryController() throws Exception {
+        List<Diary> list = new ArrayList<>(List.of(diary));
+        given(diaryService.getDiary(any())).willReturn(list);
+
+        mockMvc.perform(get("/diaries/diary?date=1234-12-12"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].content").value("test"))
+                .andExpect(jsonPath("$[0].weather").value("weather"))
+                .andExpect(jsonPath("$[0].ico").value("ico"))
+                .andExpect(jsonPath("$[0].temp").value(123.12))
+                .andExpect(jsonPath("$[0].writeDate").value("1234-12-12"));
     }
 }
