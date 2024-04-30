@@ -56,7 +56,7 @@ class DiaryServiceTest {
 
     @Test
     @DisplayName("일기 수정 성공 테스트")
-    void updateDiary() throws IOException {
+    void updateDiary() throws IOException, DiaryException {
         Diary diary = diaryService.createDiary("2024-04-30", "test");
         Diary modified = diaryService.updateDiary("2024-04-30", "good");
 
@@ -75,7 +75,7 @@ class DiaryServiceTest {
 
     @Test
     @DisplayName("일기 삭제 성공 테스트")
-    void deleteDiary() throws IOException {
+    void deleteDiary() throws IOException, DiaryException {
         Diary diary = diaryService.createDiary("2024-04-30", "test");
         diaryService.deleteDiary("2024-04-30");
 
