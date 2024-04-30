@@ -12,7 +12,7 @@ import lombok.Setter;
 @Builder
 @Schema(description = "예외 응답 response")
 public class DiaryErrorResponse {
-    @Schema(description = "http 상태 코드", example = "404")
+    @Schema(description = "http 상태 코드", examples = {"400", "404"})
     private int status;
 
     @Schema(description = "예외에 대한 설명", example = "예외가 발생했습니다.")
