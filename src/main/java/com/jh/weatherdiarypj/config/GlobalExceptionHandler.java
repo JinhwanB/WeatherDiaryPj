@@ -1,6 +1,5 @@
 package com.jh.weatherdiarypj.config;
 
-import com.jh.weatherdiarypj.diary.exception.DiaryErrorResponse;
 import com.jh.weatherdiarypj.diary.exception.DiaryException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -17,12 +16,12 @@ import java.util.List;
 @Slf4j
 public class GlobalExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<List<DiaryErrorResponse>> handleValidException(ConstraintViolationException e) {
+    public ResponseEntity<List<ApiResponse>> handleValidException(ConstraintViolationException e) {
         log.error("유효성 검사 실패");
 
-        List<DiaryErrorResponse> list = new ArrayList<>();
+        List<ApiResponse> list = new ArrayList<>();
         for (ConstraintViolation<?> constraintViolation : e.getConstraintViolations()) {
-            DiaryErrorResponse response = DiaryErrorResponse.builder()
+            ApiResponse response = ApiResponse.builder()
                     .status(400)
                     .message(constraintViolation.getMessage())
                     .build();
@@ -34,9 +33,9 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(DiaryException.class)
-    public ResponseEntity<DiaryErrorResponse> handleDiaryException(DiaryException e) {
+    public ResponseEntity<ApiResponse> handleDiaryException(DiaryException e) {
         log.error("DiaryException={}", e.getErrorCode().getMessage());
-        DiaryErrorResponse response = DiaryErrorResponse.builder()
+        ApiResponse response = ApiResponse.builder()
                 .status(e.getErrorCode().getStatus())
                 .message(e.getErrorCode().getMessage())
                 .build();
@@ -45,10 +44,10 @@ public class GlobalExceptionHandler {
 
     // 예상하지 못한 오류 응답
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<DiaryErrorResponse> handleAllException(Exception e) {
+    public ResponseEntity<ApiResponse> handleAllException(Exception e) {
         log.error("예기치 못한 exception이 발생했습니다={}", e.getClass());
         log.error("에러 메시지={}", e.getMessage());
-        DiaryErrorResponse response = DiaryErrorResponse.builder()
+        ApiResponse response = ApiResponse.builder()
                 .message("예기치 못한 오류가 발생했습니다. 서버에 문의하세요.")
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .build();
