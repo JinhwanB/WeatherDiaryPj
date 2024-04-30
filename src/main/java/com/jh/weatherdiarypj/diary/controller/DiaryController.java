@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Pattern;
@@ -19,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -37,18 +39,20 @@ public class DiaryController {
             @Parameter(name = "text", description = "작성할 일기의 내용")
     })
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = DiaryResponseDto.class))),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "파라미터 유효성 검증 실패", content = @Content(array = @ArraySchema(schema = @Schema(implementation = GlobalApiResponse.class))))
+            @ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = GlobalApiResponse.class))),
+            @ApiResponse(responseCode = "400", description = "파라미터 유효성 검증 실패", content = @Content(array = @ArraySchema(schema = @Schema(implementation = GlobalApiResponse.class)))),
+            @ApiResponse(responseCode = "500", description = "예상치 못한 오류", content = @Content(schema = @Schema(implementation = GlobalApiResponse.class)))
     })
     @PostMapping("/diary")
-    public ResponseEntity<DiaryResponseDto> create(
+    public ResponseEntity<GlobalApiResponse> create(
             @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String date,
             @RequestParam String text) {
         log.info("작성 날짜={}", date);
         log.info("작성할 내용={}", text);
 
         Diary diary = diaryService.createDiary(date, text);
-        return ResponseEntity.ok(diary.toDto());
+        List<DiaryResponseDto> list = new ArrayList<>(List.of(diary.toDto()));
+        return ResponseEntity.ok(GlobalApiResponse.toApiResponse(list));
     }
 
     // 일기 수정
@@ -57,42 +61,62 @@ public class DiaryController {
             @Parameter(name = "date", description = "수정할 일기의 날짜"),
             @Parameter(name = "text", description = "수정할 일기의 내용")
     })
-    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = DiaryResponseDto.class)))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = GlobalApiResponse.class))),
+            @ApiResponse(responseCode = "400", description = "파라미터 유효성 검증 실패", content = @Content(array = @ArraySchema(schema = @Schema(implementation = GlobalApiResponse.class)))),
+            @ApiResponse(responseCode = "404", description = "수정하려는 일기가 존재하지 않는 경우", content = @Content(schema = @Schema(implementation = GlobalApiResponse.class))),
+            @ApiResponse(responseCode = "500", description = "예상치 못한 오류", content = @Content(schema = @Schema(implementation = GlobalApiResponse.class)))
+    })
     @PutMapping("/diary")
-    public ResponseEntity<DiaryResponseDto> update(
+    public ResponseEntity<GlobalApiResponse> update(
             @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String date,
             @RequestParam String text) {
         log.info("수정할 일기의 날짜={}", date);
         log.info("수정할 내용={}", text);
 
         Diary diary = diaryService.updateDiary(date, text);
-        return ResponseEntity.ok(diary.toDto());
+        List<DiaryResponseDto> list = new ArrayList<>(List.of(diary.toDto()));
+        return ResponseEntity.ok(GlobalApiResponse.toApiResponse(list));
     }
 
     // 일기 삭제
     @Operation(summary = "일기 삭제")
     @Parameter(name = "date", description = "삭제할 일기의 날짜")
-    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = String.class)))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = GlobalApiResponse.class))),
+            @ApiResponse(responseCode = "400", description = "파라미터 유효성 검증 실패", content = @Content(array = @ArraySchema(schema = @Schema(implementation = GlobalApiResponse.class)))),
+            @ApiResponse(responseCode = "404", description = "삭제하려는 일기가 존재하지 않는 경우", content = @Content(schema = @Schema(implementation = GlobalApiResponse.class))),
+            @ApiResponse(responseCode = "500", description = "예상치 못한 오류", content = @Content(schema = @Schema(implementation = GlobalApiResponse.class)))
+    })
     @DeleteMapping("/diary")
-    public ResponseEntity<String> delete(
+    public ResponseEntity<GlobalApiResponse> delete(
             @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String date) {
         log.info("삭제할 일기의 작성 날짜={}", date);
 
         diaryService.deleteDiary(date);
-        return ResponseEntity.ok("삭제 성공");
+        GlobalApiResponse response = GlobalApiResponse.builder()
+                .status(200)
+                .message("성공")
+                .build();
+        return ResponseEntity.ok(response);
     }
 
     // 일기 조회
     @Operation(summary = "일기 조회")
     @Parameter(name = "date", description = "삭제할 일기의 날짜")
-    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공", content = @Content(array = @ArraySchema(schema = @Schema(implementation = DiaryResponseDto.class))))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = GlobalApiResponse.class))),
+            @ApiResponse(responseCode = "400", description = "파라미터 유효성 검증 실패", content = @Content(array = @ArraySchema(schema = @Schema(implementation = GlobalApiResponse.class)))),
+            @ApiResponse(responseCode = "500", description = "예상치 못한 오류", content = @Content(schema = @Schema(implementation = GlobalApiResponse.class)))
+    })
     @GetMapping("/diary")
-    public ResponseEntity<List<DiaryResponseDto>> get(
+    public ResponseEntity<GlobalApiResponse> get(
             @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String date) {
         log.info("조회할 일기의 작성 날짜={}", date);
 
         List<Diary> diaryList = diaryService.getDiary(date);
-        return ResponseEntity.ok(diaryList.stream().map(Diary::toDto).toList());
+        List<DiaryResponseDto> dtoList = diaryList.stream().map(Diary::toDto).toList();
+        return ResponseEntity.ok(GlobalApiResponse.toApiResponse(dtoList));
     }
 
     // startDate부터 endDate까지의 일기 조회
@@ -101,15 +125,20 @@ public class DiaryController {
             @Parameter(name = "startDate", description = "조회할 일기 범위의 시작날짜"),
             @Parameter(name = "endDate", description = "조회할 일기 범위의 끝날짜")
     })
-    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공", content = @Content(array = @ArraySchema(schema = @Schema(implementation = DiaryResponseDto.class))))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = GlobalApiResponse.class))),
+            @ApiResponse(responseCode = "400", description = "파라미터 유효성 검증 실패", content = @Content(array = @ArraySchema(schema = @Schema(implementation = GlobalApiResponse.class)))),
+            @ApiResponse(responseCode = "500", description = "예상치 못한 오류", content = @Content(schema = @Schema(implementation = GlobalApiResponse.class)))
+    })
     @GetMapping
-    public ResponseEntity<List<DiaryResponseDto>> getFromStartEnd(
+    public ResponseEntity<GlobalApiResponse> getFromStartEnd(
             @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String startDate,
             @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String endDate) {
         log.info("조회할 날짜의 시작날짜 ={}", startDate);
         log.info("조회할 날짜의 끝날짜={}", endDate);
 
         List<Diary> diaries = diaryService.getDiaries(startDate, endDate);
-        return ResponseEntity.ok(diaries.stream().map(Diary::toDto).toList());
+        List<DiaryResponseDto> dtoList = diaries.stream().map(Diary::toDto).toList();
+        return ResponseEntity.ok(GlobalApiResponse.toApiResponse(dtoList));
     }
 }
