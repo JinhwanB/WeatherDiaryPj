@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -36,16 +35,16 @@ public class WeatherService {
     private String apiKey;
 
     @Scheduled(cron = "0 0 1 * * *")
-    public void saveWeather() throws IOException {
+    public void saveWeather() {
         weatherRepository.save(getWeatherFromApi());
     }
 
-    public Map<String, Object> getWeatherInfo() throws IOException {
+    public Map<String, Object> getWeatherInfo() {
         String weatherData = getWeatherString();
         return parseWeather(weatherData);
     }
 
-    public Weather getWeatherFromApi() throws IOException {
+    public Weather getWeatherFromApi() {
         Map<String, Object> weatherInfo = getWeatherInfo();
         double temp = (double) weatherInfo.get("temp");
         String weather = (String) weatherInfo.get("main");
