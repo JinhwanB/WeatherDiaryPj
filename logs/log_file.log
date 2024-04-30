@@ -1,0 +1,35 @@
+[2024-04-30 11:25:08:754][background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+[2024-04-30 11:25:08:793][main] INFO  c.j.w.WeatherdiarypjApplication - Starting WeatherdiarypjApplication using Java 20 with PID 444536 (C:\weatherdiarypj\build\classes\java\main started by PC in C:\weatherdiarypj)
+[2024-04-30 11:25:08:794][main] INFO  c.j.w.WeatherdiarypjApplication - No active profile set, falling back to 1 default profile: "default"
+[2024-04-30 11:25:09:1508][main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2024-04-30 11:25:09:1557][main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 43 ms. Found 2 JPA repository interfaces.
+[2024-04-30 11:25:09:2031][main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+[2024-04-30 11:25:09:2041][main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[2024-04-30 11:25:09:2042][main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+[2024-04-30 11:25:09:2043][main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+[2024-04-30 11:25:09:2107][main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+[2024-04-30 11:25:09:2107][main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1272 ms
+[2024-04-30 11:25:09:2257][main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[2024-04-30 11:25:09:2315][main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+[2024-04-30 11:25:09:2349][main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+[2024-04-30 11:25:10:2602][main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+[2024-04-30 11:25:10:2632][main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+[2024-04-30 11:25:10:2762][main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@33a71d23
+[2024-04-30 11:25:10:2764][main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+[2024-04-30 11:25:10:2799][main] WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+[2024-04-30 11:25:10:2803][main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+[2024-04-30 11:25:11:3669][main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+[2024-04-30 11:25:11:3713][main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2024-04-30 11:25:11:4138][main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2024-04-30 11:25:12:4531][main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[2024-04-30 11:25:12:4549][main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+[2024-04-30 11:25:12:4562][main] INFO  c.j.w.WeatherdiarypjApplication - Started WeatherdiarypjApplication in 4.402 seconds (process running for 5.128)
+[2024-04-30 11:26:13:65933][http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+[2024-04-30 11:26:13:65933][http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+[2024-04-30 11:26:13:65935][http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+[2024-04-30 11:26:14:66436][http-nio-8080-exec-9] INFO  o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 249 ms
+[2024-04-30 11:26:27:80011][http-nio-8080-exec-1] INFO  c.j.w.d.controller.DiaryController - 조회할 날짜의 시작날짜 =2024-04-30
+[2024-04-30 11:26:27:80012][http-nio-8080-exec-1] INFO  c.j.w.d.controller.DiaryController - 조회할 날짜의 끝날짜=2024-05-01
+[2024-04-30 11:27:13:125963][SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+[2024-04-30 11:27:13:125965][SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+[2024-04-30 11:27:13:125970][SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
