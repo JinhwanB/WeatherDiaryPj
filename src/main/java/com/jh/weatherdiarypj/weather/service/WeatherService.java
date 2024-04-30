@@ -66,7 +66,7 @@ public class WeatherService {
     }
 
     // api에서 데이터를 받아옴
-    private String getWeatherString() throws IOException {
+    private String getWeatherString() {
         String apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=" + apiKey;
         try {
             URL url = new URL(apiUrl);
@@ -87,8 +87,7 @@ public class WeatherService {
             br.close();
             return response.toString();
         } catch (Exception e) {
-            log.error("failed to get response");
-            throw e;
+            return "failed to get response";
         }
     }
 
