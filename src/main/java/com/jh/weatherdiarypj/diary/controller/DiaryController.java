@@ -17,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -38,7 +37,7 @@ public class DiaryController {
     @PostMapping("/diary")
     public ResponseEntity<DiaryResponseDto> create(
             @RequestParam @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "날짜는 yyyy-mm-dd로 작성해야 합니다.") String date,
-            @RequestParam String text) throws IOException {
+            @RequestParam String text) {
         log.info("작성 날짜={}", date);
         log.info("작성할 내용={}", text);
 
