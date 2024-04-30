@@ -5,6 +5,7 @@ import com.jh.weatherdiarypj.diary.exception.DiaryException;
 import com.jh.weatherdiarypj.diary.exception.DiaryExceptionCode;
 import com.jh.weatherdiarypj.diary.repository.DiaryRepository;
 import com.jh.weatherdiarypj.weather.domain.Weather;
+import com.jh.weatherdiarypj.weather.exception.WeatherException;
 import com.jh.weatherdiarypj.weather.repository.WeatherRepository;
 import com.jh.weatherdiarypj.weather.service.WeatherService;
 import lombok.RequiredArgsConstructor;
@@ -34,17 +35,14 @@ public class DiaryService {
      * @throws IOException
      */
     public Diary createDiary(String date, String text) {
+        log.info("일기 작성 서비스 호출");
         Weather weather;
         try {
             weather = weatherService.getWeather(date);
-            log.info("저장된 날씨 불러오기 성공");
-        } catch (Exception e) {
-            log.error("날짜에 해당하는 날씨 정보가 없으므로 새롭게 저장합니다.");
-
+        } catch (WeatherException e) {
             weather = weatherService.getWeatherFromApi();
             weatherRepository.save(weather);
         }
-
         Diary diary = Diary.builder()
                 .ico(weather.getIco())
                 .content(text)
