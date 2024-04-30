@@ -17,5 +17,8 @@ spring:
     database: mysql
     show-sql: true
 
+logging:
+  config: classpath:logback-spring.xml
+
 openapi:
   key: e71f6bdd7e2f22b4169fa7f2872e05ec
