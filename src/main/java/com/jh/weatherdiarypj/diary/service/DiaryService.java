@@ -65,7 +65,7 @@ public class DiaryService {
         List<Diary> diaryList = getDiary(date);
         if (diaryList.isEmpty()) {
             log.error("diaryList.size() = 0");
-            throw new DiaryException(DiaryExceptionCode.NOT_FOUNT_DIARY.getMessage());
+            throw new DiaryException(DiaryExceptionCode.NOT_FOUNT_DIARY, DiaryExceptionCode.NOT_FOUNT_DIARY.getMessage());
         }
 
         Diary diary = diaryList.get(0);
@@ -84,7 +84,7 @@ public class DiaryService {
         List<Diary> diaryList = getDiary(date);
         if (diaryList.isEmpty()) {
             log.error("diaryList.size() = 0");
-            throw new DiaryException(DiaryExceptionCode.NOT_FOUNT_DIARY.getMessage());
+            throw new DiaryException(DiaryExceptionCode.NOT_FOUNT_DIARY, DiaryExceptionCode.NOT_FOUNT_DIARY.getMessage());
         }
 
         for (Diary diary : diaryList) {
