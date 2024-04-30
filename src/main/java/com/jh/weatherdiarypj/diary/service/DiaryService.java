@@ -35,11 +35,12 @@ public class DiaryService {
      * @throws IOException
      */
     public Diary createDiary(String date, String text) {
-        log.info("일기 작성 서비스 호출");
         Weather weather;
         try {
             weather = weatherService.getWeather(date);
+            log.info("저장되 있는 날씨 정보 가져오기 성공");
         } catch (WeatherException e) {
+            log.info("저장된 날씨 정보가 없으므로 api를 통해 날씨 정보 조회");
             weather = weatherService.getWeatherFromApi();
             weatherRepository.save(weather);
         }
@@ -63,6 +64,7 @@ public class DiaryService {
     public Diary updateDiary(String date, String text) {
         List<Diary> diaryList = getDiary(date);
         if (diaryList.isEmpty()) {
+            log.error("diaryList.size() = 0");
             throw new DiaryException(DiaryExceptionCode.NOT_FOUNT_DIARY.getMessage());
         }
 
@@ -81,6 +83,7 @@ public class DiaryService {
     public void deleteDiary(String date) {
         List<Diary> diaryList = getDiary(date);
         if (diaryList.isEmpty()) {
+            log.error("diaryList.size() = 0");
             throw new DiaryException(DiaryExceptionCode.NOT_FOUNT_DIARY.getMessage());
         }
 
