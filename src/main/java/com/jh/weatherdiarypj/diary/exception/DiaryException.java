@@ -9,6 +9,7 @@ public class DiaryException extends RuntimeException {
 
     public DiaryException(DiaryExceptionCode diaryExceptionCode, String message) {
         super(message);
+        this.message = message;
         this.errorCode = diaryExceptionCode;
     }
 }
