@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
                 .status(e.getErrorCode().getStatus())
                 .message(e.getErrorCode().getMessage())
                 .build();
-        return new ResponseEntity<>(response, HttpStatus.resolve(e.getErrorCode().getStatus());
+        return new ResponseEntity<>(response, HttpStatus.resolve(e.getErrorCode().getStatus()));
     }
 
     // 예상하지 못한 오류 응답
