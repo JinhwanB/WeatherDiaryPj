@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
                 .status(e.getErrorCode().getStatus())
                 .message(e.getErrorCode().getMessage())
                 .build();
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.resolve(e.getErrorCode().getStatus());
     }
 
     // 예상하지 못한 오류 응답
@@ -51,6 +51,6 @@ public class GlobalExceptionHandler {
                 .message("예기치 못한 오류가 발생했습니다. 서버에 문의하세요.")
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .build();
-        return ResponseEntity.ok(response);
+        return ResponseEntity.internalServerError().body(response);
     }
 }
