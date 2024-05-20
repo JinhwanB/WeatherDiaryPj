@@ -20,9 +20,8 @@
 
 # ERD
 
-|                                                        테이블                                                         |
-|:------------------------------------------------------------------------------------------------------------------:|
-| ![weather_diary](https://github.com/JinhwanB/WeatherDiaryPj/assets/123534245/b6cfcbbc-b2da-432e-aadb-748729f94d48) |
+![image](https://github.com/JinhwanB/WeatherDiaryPj/assets/123534245/041b440f-a085-4c45-b4bf-a856ae4fc7a0)
+
 
 # 목표
 
