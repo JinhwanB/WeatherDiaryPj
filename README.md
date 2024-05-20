@@ -1,5 +1,7 @@
 # 스프링부트와 java를 활용한 날씨 정보를 가지는 일기 작성 api 설계 프로젝트
 
+일기를 작성하고, OpenApi를 통해 가져온 당일 날씨 정보와 함께 일기 내용이 저장될 수 있는 API를 제공하는 프로젝트
+
 [블로그](https://velog.io/@yjj7819/series/%EB%82%A0%EC%94%A8-%EC%A0%95%EB%B3%B4%EB%A5%BC-%EA%B0%80%EC%A7%80%EB%8A%94-%EC%9D%BC%EA%B8%B0-%EC%9E%91%EC%84%B1-api-%EC%84%A4%EA%B3%84-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8)
 
 # 프로젝트 기간
