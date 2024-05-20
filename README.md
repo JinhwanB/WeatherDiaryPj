@@ -2,6 +2,10 @@
 
 [블로그](https://velog.io/@yjj7819/series/%EB%82%A0%EC%94%A8-%EC%A0%95%EB%B3%B4%EB%A5%BC-%EA%B0%80%EC%A7%80%EB%8A%94-%EC%9D%BC%EA%B8%B0-%EC%9E%91%EC%84%B1-api-%EC%84%A4%EA%B3%84-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8)
 
+# 프로젝트 기간
+
+2024.04.29 ~ 2024.05.08
+
 # 사용한 기술
 
 - spring boot 3.2.5
